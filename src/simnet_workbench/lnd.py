@@ -2,7 +2,7 @@
 # @Author: lnorb.com
 # @Date:   2023-02-10 08:22:35
 # @Last Modified by:   lnorb.com
-# @Last Modified time: 2023-02-10 11:58:36
+# @Last Modified time: 2023-02-10 12:48:40
 
 import os
 from time import sleep
@@ -12,7 +12,7 @@ from functools import lru_cache
 from invoke import task
 from simple_chalk import chalk
 
-from src.clusterlnd.utils import j, wait, run, sudo, docker, exec, lncli
+from src.simnet_workbench.utils import j, wait, run, sudo, docker, exec, lncli
 
 
 @task

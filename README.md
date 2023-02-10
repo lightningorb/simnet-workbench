@@ -1,6 +1,6 @@
-# clusterlnd
+# simnet-workbench
 
-clusterlnd remotely creates an LND cluster for dev / ops / fun etc. It uses the [fabric3](https://www.fabfile.org/installing.html). If follows the [LND Docker readme](https://github.com/lightningnetwork/lnd/blob/master/docker/README.md), and is somewhat inspired by [cmdruid/regtest-workbench](https://github.com/cmdruid/regtest-workbench).
+simnet-workbench remotely creates an LND cluster for dev / ops / fun etc. It uses the [fabric3](https://www.fabfile.org/installing.html). If follows the [LND Docker readme](https://github.com/lightningnetwork/lnd/blob/master/docker/README.md), and is somewhat inspired by [cmdruid/regtest-workbench](https://github.com/cmdruid/regtest-workbench).
 
 ```
                    ┌───────┐
@@ -31,7 +31,7 @@ clusterlnd remotely creates an LND cluster for dev / ops / fun etc. It uses the 
 
 ### Python dependencies
 
-clusterlnd only requires two depedencies: `fabric` and `simple_chalk`.
+simnet-workbench only requires two depedencies: `fabric` and `simple_chalk`.
 
 ```bash
 $ pip3 install -r requirements.txt
