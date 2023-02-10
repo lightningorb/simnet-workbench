@@ -20,8 +20,10 @@ simnet-workbench remotely creates an LND cluster for dev / ops / fun etc. It use
 
 
 - Clusters created remotely via SSH.
-- Automated opening of channels.
+- Automated mining of coins (get rich quick).
+- Automated opening of balanced channels.
 - Provides handy aliases (bob, alice etc.)
+- Remote CLI capability.
 
 ## Requires
 
