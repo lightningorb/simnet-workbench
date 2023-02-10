@@ -59,3 +59,19 @@ $ bob 'sendpayment -f --pay_req=<ln...>'
 $ bob channelbalance
 ```
 
+## How does it connect to the host?
+
+The cleanest way to set up your host is with your `~/.ssh/config` file:
+
+```
+Host lnd
+    HostName xx.xx.xx.xx
+    User ubuntu
+    Port 22
+    IdentityFile ~/.ssh/<my_cert_file>
+```
+
+## Can it run on my local machine?
+
+Yes of course. Just strip out the `-H lnd` part of the commands in `spawn.sh` and it runs locally. Please be careful. It only invokes `docker` and `docker-compose` so is quite safe to use, but use at your own risk nevertheless.
+
