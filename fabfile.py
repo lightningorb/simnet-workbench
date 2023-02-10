@@ -2,7 +2,7 @@
 # @Author: lnorb.com
 # @Date:   2023-02-10 08:00:59
 # @Last Modified by:   lnorb.com
-# @Last Modified time: 2023-02-10 09:18:09
+# @Last Modified time: 2023-02-10 11:44:48
 
 # Fabric uses PyInvoke. This is a collection of tasks.
 from invoke import Collection
@@ -13,10 +13,10 @@ from src.clusterlnd.monkey_patch import fix_annotations
 fix_annotations()
 
 # We use a bunch of syntax sugar to work with Fabric.
-from src.clusterlnd.utils import *
+from src.clusterlnd.utils import docker, lncli
 
 # Import LND commands
 from src.clusterlnd import lnd
 
 # Declare our command namespace
-namespace = Collection(lnd, docker)
+namespace = Collection(lnd, docker, lncli)

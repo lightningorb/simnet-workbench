@@ -2,7 +2,7 @@
 # @Author: lnorb.com
 # @Date:   2023-02-10 09:00:10
 # @Last Modified by:   lnorb.com
-# @Last Modified time: 2023-02-10 10:11:23
+# @Last Modified time: 2023-02-10 12:03:48
 
 import sys
 import json
@@ -55,7 +55,15 @@ def docker(c, cmd):
 
 
 exec = lambda c, name, cmd: docker(c, f"exec -i {name} {cmd}")
-lncli = lambda c, name, cmd: exec(c, name, f"lncli --network=simnet {cmd}")
+
+
+@task
+def lncli(c, name, cmd, verbose=True):
+    res = exec(c, name, f"lncli --network=simnet {cmd}")
+    if verbose:
+        print(res.stdout)
+    return res
+
 
 # the j function is just shorthand for loading json
 j = lambda x: json.loads(x.stdout if hasattr(x, "stdout") else x)

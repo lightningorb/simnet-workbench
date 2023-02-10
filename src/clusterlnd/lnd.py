@@ -2,7 +2,7 @@
 # @Author: lnorb.com
 # @Date:   2023-02-10 08:22:35
 # @Last Modified by:   lnorb.com
-# @Last Modified time: 2023-02-10 10:45:04
+# @Last Modified time: 2023-02-10 11:58:36
 
 import os
 from time import sleep
@@ -21,9 +21,6 @@ def start(c, name: str = "", channels: str = ""):
     This is our main function (it's called start to match regtest-workbench).
     Please note this is being run once per node.
     """
-
-    # Clone LND if we don't have it already
-    clone_lnd(c)
 
     # Create the required volume for the node
     create_volume(c, name)
@@ -129,7 +126,11 @@ def open_channel(c, from_name, to_name):
     # Print whether the node is connected to the target node
     print(chalk.magenta(f"{from_name} is connected to {to_name}: {to_pk in peers}"))
     # Open a channel to the target node
-    lncli(c, from_name, f"openchannel --node_key={to_pk} --local_amt=1000000")
+    lncli(
+        c,
+        from_name,
+        f"openchannel --node_key={to_pk} --local_amt=1000000 --push_amt=500000",
+    )
     # Generate 3 blocks in the network
     exec(c, "btcd", "/start-btcctl.sh generate 3")
 
@@ -165,13 +166,20 @@ def create_volume(c, name):
     """
     Create a volume for the given node.
     """
+    docker(c, f"volume rm -f simnet_lnd_{name}")
     docker(c, f"volume create simnet_lnd_{name}")
 
 
 @task
-def clone_lnd(c):
+def clone(c):
     """
     Clone LND if the LND directory doesn't already exist
     """
     if not c.run("test -d lnd", warn=True):
         c.run("git clone https://github.com/lightningnetwork/lnd.git")
+
+
+@task
+def build(c, tag="myrepository/lnd-dev"):
+    with c.cd("lnd"):
+        c.run(f"sudo docker build --tag={tag} -f dev.Dockerfile .")

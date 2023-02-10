@@ -42,5 +42,17 @@ $ pip3 install -r requirements.txt
 The simplest and cleanest way is to use the `src/spawn.sh` script to avoid having to mess with long commands in bash.
 
 ```bash
-$ src/spawn.sh
+$ . src/spawn.sh
 ```
+
+We source the spawn script as it creates convenience aliases, for example you can run:
+
+```
+$ alice --help
+$ alice getnetworkinfo
+$ alice 'addinvoice --help'
+$ alice 'addinvoice --amt 100000'
+$ bob 'sendpayment -f --pay_req=<ln...>'
+$ bob channelbalance
+```
+
