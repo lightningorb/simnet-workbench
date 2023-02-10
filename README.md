@@ -34,6 +34,8 @@ simnet-workbench remotely creates an LND cluster for dev / ops / fun etc. It use
 simnet-workbench only requires two depedencies: `fabric` and `simple_chalk`.
 
 ```bash
+$ python3 -m venv .venv
+$ . .venv/bin/activate
 $ pip3 install -r requirements.txt
 ```
 
