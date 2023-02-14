@@ -18,10 +18,7 @@ simnet-workbench remotely creates an LND cluster for dev / ops / fun etc. It use
   └───────┘                          └───────┘
 ```
 
-<video width="320" height="240" controls>
-  <source src="https://lnorb.s3.us-east-2.amazonaws.com/simnet.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[See Video](https://lnorb.s3.us-east-2.amazonaws.com/simnet.mp4)
 
 
 - Clusters created remotely via SSH.
