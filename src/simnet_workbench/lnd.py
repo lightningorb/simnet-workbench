@@ -45,7 +45,7 @@ def create_node(c, name: str):
     """
     This creates the node, basically creates the lnd container and runs it.
     """
-    with c.cd("lnd/docker"):
+    with c.cd("~/lnd/docker"):
         # Here we should called 'docker' instead of run, but fabric has an old bug
         # where sudo can't be called in a cd scope.
         run(
@@ -94,7 +94,7 @@ def fund(c, name: str):
     # Get the address of the node
     address = get_address(c, name)
     # Change to the lnd/docker directory
-    with c.cd("lnd/docker"):
+    with c.cd("~/lnd/docker"):
         # Start the btcd docker container
         run(c, f"sudo MINING_ADDRESS={address} docker compose up -d btcd")
     # Generate 400 coins
@@ -175,11 +175,12 @@ def clone(c):
     """
     Clone LND if the LND directory doesn't already exist
     """
-    if not c.run("test -d lnd", warn=True):
-        c.run("git clone https://github.com/lightningnetwork/lnd.git")
+    with c.cd('~/'):
+        if not c.run("test -d ~/lnd", warn=True):
+            c.run("git clone https://github.com/lightningnetwork/lnd.git")
 
 
 @task
 def build(c, tag="myrepository/lnd-dev"):
-    with c.cd("lnd"):
+    with c.cd("~/lnd"):
         c.run(f"sudo docker build --tag={tag} -f dev.Dockerfile .")

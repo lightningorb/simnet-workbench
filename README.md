@@ -75,5 +75,5 @@ Host lnd
 
 ## Can it run on my local machine?
 
-Yes of course. Just strip out the `-H lnd` part of the commands in `spawn.sh` and it runs locally. Please be careful. It only invokes `docker` and `docker-compose` so is quite safe to use, but use at your own risk nevertheless.
+Yes of course. Just strip out the `-H lnd` part of the commands in `spawn.sh`. At some point that'll be implemented properly as a flag.
 
