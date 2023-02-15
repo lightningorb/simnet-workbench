@@ -45,7 +45,20 @@ def run_cmd(c, cmd_name, cmd, env={}):
     return res
 
 
-run = lambda c, cmd: run_cmd(c, "run", cmd=cmd)
+@task
+def run(c, cmd):
+    return run_cmd(c, "run", cmd=cmd)
+
+
+@task
+def test(c, package):
+    with c.cd("~/lnd"):
+        return c.run(
+            f"/usr/local/go/bin/go test -v {package}",
+            env=dict(GOPATH="/home/ubuntu/go"),
+        )
+
+
 sudo = lambda c, cmd: run_cmd(c, "sudo", cmd=cmd)
 
 

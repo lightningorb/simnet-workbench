@@ -175,7 +175,7 @@ def clone(c):
     """
     Clone LND if the LND directory doesn't already exist
     """
-    with c.cd('~/'):
+    with c.cd("~/"):
         if not c.run("test -d ~/lnd", warn=True):
             c.run("git clone https://github.com/lightningnetwork/lnd.git")
 

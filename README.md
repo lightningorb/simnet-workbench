@@ -77,3 +77,17 @@ Host lnd
 
 Yes of course. Just strip out the `-H lnd` part of the commands in `spawn.sh`. At some point that'll be implemented properly as a flag.
 
+## SQLite Support
+
+SQLite support was recently added. To enable SQLite simply copy the sample file:
+
+```
+$ cp src/sample-lnd.conf src/lnd.conf
+```
+
+And enable SQL support by toggling on, in `src/lnd.conf`:
+
+```
+db.backend=sqlite
+```
+

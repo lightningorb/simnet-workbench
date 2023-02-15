@@ -13,10 +13,10 @@ from src.simnet_workbench.monkey_patch import fix_annotations
 fix_annotations()
 
 # We use a bunch of syntax sugar to work with Fabric.
-from src.simnet_workbench.utils import docker, lncli
+from src.simnet_workbench.utils import docker, lncli, run, test
 
 # Import LND commands
 from src.simnet_workbench import lnd
 
 # Declare our command namespace
-namespace = Collection(lnd, docker, lncli)
+namespace = Collection(lnd, docker, lncli, run, test)
