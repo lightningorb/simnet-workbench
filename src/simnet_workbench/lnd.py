@@ -6,13 +6,12 @@
 
 import os
 from time import sleep
-from pathlib import Path
 from functools import lru_cache
 
 from invoke import task
 from simple_chalk import chalk
 
-from src.simnet_workbench.utils import j, wait, run, sudo, docker, exec, lncli
+from src.simnet_workbench.utils import j, wait, run, docker, exec, lncli
 
 
 @task
@@ -46,11 +45,9 @@ def create_node(c, name: str):
     This creates the node, basically creates the lnd container and runs it.
     """
     with c.cd("~/lnd/docker"):
-        # Here we should called 'docker' instead of run, but fabric has an old bug
-        # where sudo can't be called in a cd scope.
-        run(
+        docker(
             c,
-            f"sudo docker compose run -d --name {name} --volume simnet_lnd_{name}:/root/.lnd lnd",
+            f"compose run -d --name {name} --volume simnet_lnd_{name}:/root/.lnd lnd",
         )
 
 
@@ -96,7 +93,7 @@ def fund(c, name: str):
     # Change to the lnd/docker directory
     with c.cd("~/lnd/docker"):
         # Start the btcd docker container
-        run(c, f"sudo MINING_ADDRESS={address} docker compose up -d btcd")
+        run(c, f"MINING_ADDRESS={address} docker compose up -d btcd")
     # Generate 400 coins
     exec(c, "btcd", "/start-btcctl.sh generate 400")
     # Check if the balance is greater than 0
@@ -183,4 +180,4 @@ def clone(c):
 @task
 def build(c, tag="myrepository/lnd-dev"):
     with c.cd("~/lnd"):
-        c.run(f"sudo docker build --tag={tag} -f dev.Dockerfile .")
+        c.run(f"docker build --tag={tag} -f dev.Dockerfile .")

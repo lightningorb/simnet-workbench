@@ -1,0 +1,29 @@
+# .github/actions/setup-simnet-workbench/action.yml
+name: 'Setup Simnet Workbench'
+description: 'Setup environment for Simnet Workbench'
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+
+    - name: Install requirements
+      shell: bash
+      run: pip install -r src/requirements.txt
+
+    - name: Setup lnd
+      uses: ./.github/actions/setup-lnd
+      with:
+        lnd-repo: 'https://github.com/lightningnetwork/lnd.git'
+        lnd-dockerfile: '~/lnd/dev.Dockerfile'
+        lnd-image: 'lnd'
+
+    - name: Setup nodes and open channels
+      shell: bash
+      run: |
+        ./simnet-workbench lnd.start --name alice
+        ./simnet-workbench lnd.start --name bob    --channels alice
+        ./simnet-workbench lnd.start --name carol  --channels bob,alice
+        

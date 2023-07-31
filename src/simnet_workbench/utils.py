@@ -33,15 +33,16 @@ def wait(func):
 def run_cmd(c, cmd_name, cmd, env={}):
     renv = dict(NETWORK="simnet")
     renv.update(env)
-    print(chalk.green(cmd), end=" ")
-    sys.stdout.flush()
+    sys.stderr.write(str(chalk.green(cmd)))
+    sys.stderr.flush()
     try:
         res = getattr(c, cmd_name)(cmd, env=renv, hide=True)
     except Exception as e:
-        print("...")
-        sys.stdout.flush()
+        sys.stderr.write("...")
+        sys.stderr.flush()
         raise e
-    print("⚡❌"[res.failed])
+    sys.stderr.write("⚡❌"[res.failed] + '\n')
+    sys.stderr.flush()
     return res
 
 
@@ -59,7 +60,7 @@ def test(c, package):
         )
 
 
-sudo = lambda c, cmd: run_cmd(c, "sudo", cmd=cmd)
+sudo = lambda c, cmd: run(c, cmd=cmd)
 
 
 @task

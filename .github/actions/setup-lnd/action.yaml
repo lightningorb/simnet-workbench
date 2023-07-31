@@ -1,0 +1,45 @@
+name: 'Setup lnd'
+description: 'Clones, loads, and builds lnd Docker image'
+
+inputs:
+  lnd-repo:
+    description: 'lnd repository URL'
+    required: true
+    default: 'https://github.com/lightningnetwork/lnd.git'
+  lnd-dockerfile:
+    description: 'lnd Dockerfile location'
+    required: true
+    default: '~/lnd/dev.Dockerfile'
+  lnd-image:
+    description: 'Docker image name'
+    required: true
+    default: 'lnd'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Clone lnd
+      run: git clone ${{ inputs.lnd-repo }} ~/lnd
+      shell: bash
+
+    - name: Restore cached Docker image
+      id: cache
+      uses: actions/cache@v2
+      with:
+        path: /tmp/docker-${{ inputs.lnd-image }}.tar
+        key: ${{ inputs.lnd-image }}
+
+    - name: Load cached Docker image
+      run: |
+        if [ -f /tmp/docker-${{ inputs.lnd-image }}.tar ]; then
+          docker load -i /tmp/docker-${{ inputs.lnd-image }}.tar
+        fi
+      shell: bash
+
+    - name: Build and cache Docker image
+      run: |
+        if [[ "${{ steps.cache.outputs.cache-hit }}" != "true" ]]; then
+          docker build -t ${{ inputs.lnd-image }} -f ${{ inputs.lnd-dockerfile }} ~/lnd
+          docker save ${{ inputs.lnd-image }} -o /tmp/docker-${{ inputs.lnd-image }}.tar
+        fi
+      shell: bash

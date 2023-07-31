@@ -1,0 +1,32 @@
+name: test
+on:
+  push:
+    branches:
+      - '*'
+jobs:
+  test:
+    permissions: write-all
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Simnet Workbench
+        uses: ./.github/actions/setup-simnet-workbench
+
+      - name: Do cool LND stuff
+        shell: bash
+        run: |
+          #
+          # define aliases (makes things more readable)
+          #
+          alice() { ./simnet-workbench lncli alice "${@}"; }
+          bob() { ./simnet-workbench lncli bob "${@}"; }
+          carol() { ./simnet-workbench lncli carol "${@}"; }
+          #
+          # make a payment
+          #
+          bolt11=$(alice "addinvoice --amt 10000 --memo 'pay me'" | jq -r '.payment_request')
+          result=$(bob "payinvoice --pay_req ${bolt11} --json -f" | jq -r '.status')
+          test "${result}" == "SUCCEEDED" || exit 1
+          echo "Payment Successful!"
