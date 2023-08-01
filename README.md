@@ -1,3 +1,5 @@
+[![test](https://github.com/lightningorb/simnet-workbench/actions/workflows/test.yaml/badge.svg)](https://github.com/lightningorb/simnet-workbench/actions/workflows/test.yaml)
+
 # simnet-workbench
 
 simnet-workbench remotely creates an LND cluster for dev / ops / fun etc. It uses [fabric3](https://www.fabfile.org/installing.html). If follows the [LND Docker readme](https://github.com/lightningnetwork/lnd/blob/master/docker/README.md), and is somewhat inspired by [cmdruid/regtest-workbench](https://github.com/cmdruid/regtest-workbench).
@@ -91,3 +93,8 @@ And enable SQL support by toggling on, in `src/lnd.conf`:
 db.backend=sqlite
 ```
 
+# Github actions
+
+The simnet workbench works on Github actions. It only takes about 2 minutes to setup LND, the nodes, connect them in a state where payments can be made. See the github workflow for more details.
+
+Soon these actions will be moved out and refactored so they can be used from any repo.
