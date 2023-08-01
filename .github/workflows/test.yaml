@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Simnet Workbench
-        uses: lightning-orb/simnet-workbench@action/.github/actions/setup-simnet-workbench
+        uses: lightningorb/simnet-workbench@action/.github/actions/setup-simnet-workbench
 
       - name: Do cool LND stuff
         shell: bash
